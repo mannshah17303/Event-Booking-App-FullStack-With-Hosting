@@ -7,39 +7,41 @@ export const userService = {
     return await userRepository.getAll();
   },
 
-  async registerUser(name:string, email:string, role:string, password:string) {
+  async registerUser(
+    name: string,
+    email: string,
+    role: string,
+    password: string,
+  ) {
     const hashedPassword = await bcrypt.hash(password, 10);
     password = hashedPassword;
     const user = await userRepository.registerUser(name, email, role, password);
     return user;
   },
 
-  async findUserByEmail(email:string){
+  async findUserByEmail(email: string) {
     const user = await userRepository.findUserByEmail(email);
     return user;
   },
 
-  async getDataOfLoggedInUser(userId:string){
-    
-    const user = await userRepository.getDataOfLoggedInUser(userId)
-    return user
+  async getDataOfLoggedInUser(userId: string) {
+    const user = await userRepository.getDataOfLoggedInUser(userId);
+    return user;
   },
 
-
   async updateUser(
-    id: string,
-    updatedData: { name: string; email: string; role: string }
+    id: any,
+    updatedData: { name: string; email: string; role: string },
   ) {
     return userRepository.updateUser(id, updatedData);
   },
 
-  async resetPassword(email:string, password:string, userId:string){
-
+  async resetPassword(email: string, password: string, userId: string) {
     const hashedPassword = await bcrypt.hash(password, 10);
-    return userRepository.resetPassword(email, hashedPassword, userId)
+    return userRepository.resetPassword(email, hashedPassword, userId);
   },
 
-  async deleteUser(id: string) {
+  async deleteUser(id: any) {
     return userRepository.deleteUser(id);
   },
 };
